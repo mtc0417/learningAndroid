@@ -32,6 +32,39 @@ public class Card extends ImageView {
     public enum CardOrientation {
         VERTICAL, HORIZONTAL
     }
+
+    public CardSuit getCardSuit() {
+        return mCardSuit;
+    }
+
+    public CardNumber getCardNumber() {
+        return mCardNumber;
+    }
+
+    public CardDisplayState getCardDisplayState() {
+        return mCardDisplayState;
+    }
+
+    public CardOrientation getCardOrientation() {
+        return mCardOrientation;
+    }
+
+    public void setCardSuit(CardSuit cardSuit) {
+        this.mCardSuit = cardSuit;
+    }
+
+    public void setCardNumber(CardNumber cardNumber) {
+        this.mCardNumber = cardNumber;
+    }
+
+    public void setCardDisplayState(CardDisplayState cardDisplayState) {
+        this.mCardDisplayState = cardDisplayState;
+    }
+
+    public void setCardOrientation(CardOrientation cardOrientation) {
+        this.mCardOrientation = cardOrientation;
+    }
+
     private CardSuit mCardSuit;
     private CardNumber mCardNumber;
     private CardDisplayState mCardDisplayState;
@@ -41,6 +74,17 @@ public class Card extends ImageView {
         super(context);
     }
 
+    public Card(Context context, CardSuit suit, CardNumber number){
+        super(context);
+        mCardSuit = suit;
+        mCardNumber = number;
+        loadImage();
+    }
+
+    public void loadImage()
+    {
+        this.setImageBitmap(getFrontBitmap());
+    }
     public String getDrawableName()
     {
         String name = "";
@@ -60,36 +104,79 @@ public class Card extends ImageView {
                 break;
         }
 
-        switch
+        switch(mCardNumber)
+        {
+            case N1:
+                name += '1';
+                break;
+            case N2:
+                name += '2';
+                break;
+            case N3:
+                name += '3';
+                break;
+            case N4:
+                name += '4';
+                break;
+            case N5:
+                name += '5';
+                break;
+            case N6:
+                name += '6';
+                break;
+            case N7:
+                name += '7';
+                break;
+            case N8:
+                name += '8';
+                break;
+            case N9:
+                name += '9';
+                break;
+            case N10:
+                name += "10";
+                break;
+            case J:
+                name += 'j';
+                break;
+            case Q:
+                name += 'q';
+                break;
+            case K:
+                name += 'k';
+                break;
+        }
+        //return name + ".png";
         return name;
     }
     public Bitmap getFrontBitmap() {
-        Drawable d  = getAndroidDrawable("b1fh");
-        Bitmap bMap = getBitmap(d);
-        return bMap;
+        return getBitmap(getDrawableName());
     }
 
-    static public Drawable getAndroidDrawable(String pDrawableName){
-        int resourceId= Resources.getSystem().getIdentifier(pDrawableName, "drawable", "android");
+    public Drawable getAndroidDrawable(String pDrawableName){
+        int resourceId = this.getContext().getResources().getIdentifier(pDrawableName, "drawable", BuildConfig.APPLICATION_ID);
+        String name = this.getContext().getResources().getResourceName(resourceId);
         if(resourceId==0){
             return null;
         } else {
             Resources.Theme theme = null;
-            return Resources.getSystem().getDrawable(resourceId);
+            return this.getContext().getResources().getDrawable(resourceId);
             //return Resources.getSystem().getDrawable(resourceId, theme);
         }
     }
-    static public Bitmap getBitmap(Drawable d) {
+    public Bitmap getBitmap(Drawable d) {
         Bitmap image = ((BitmapDrawable) d).getBitmap();
         return image;
     }
-    static public Bitmap getHorizontalBackBitmap() {
-        Drawable d  = getAndroidDrawable("b1fh");
-        Bitmap bMap = getBitmap(d);
-        return bMap;
+    public Bitmap getHorizontalBackBitmap() {
+        return getBitmap("b1fh");
     }
-    static public Bitmap getVerticalBackBitmap() {
-        Drawable d  = getAndroidDrawable("b1vh");
+    public Bitmap getVerticalBackBitmap() {
+        return getBitmap("b1fv");
+    }
+    public Bitmap getBitmap(String drawableName)
+    {
+        Drawable d  = getAndroidDrawable(drawableName);
         Bitmap bMap = getBitmap(d);
         return bMap;
     }
