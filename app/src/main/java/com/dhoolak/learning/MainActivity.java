@@ -42,7 +42,9 @@ public class MainActivity extends Activity {
         image3.setImageBitmap(bMap);
         leftLayout.addView(image3);
 
-        Card card = new Card(this, Card.CardSuit.CHIDI, Card.CardNumber.J);
+        CardView card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.J));
+        bottomLayout.addView(card);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N2));
         bottomLayout.addView(card);
 
         Button btn1 = new Button(this);

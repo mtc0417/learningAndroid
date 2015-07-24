@@ -1,17 +1,9 @@
 package com.dhoolak.learning;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-
 /**
  * Created by prakasht on 7/22/2015.
  */
-public class Card extends ImageView {
+public class Card {
 
     public enum CardSuit { // Clubs, Spades, Hearts, Diamonds
         CHIDI, HUKUM, PAAN, EENT
@@ -26,27 +18,12 @@ public class Card extends ImageView {
             }
         }
     }
-    public enum CardDisplayState {
-        OPEN, CLOSE
-    }
-    public enum CardOrientation {
-        VERTICAL, HORIZONTAL
-    }
-
     public CardSuit getCardSuit() {
         return mCardSuit;
     }
 
     public CardNumber getCardNumber() {
         return mCardNumber;
-    }
-
-    public CardDisplayState getCardDisplayState() {
-        return mCardDisplayState;
-    }
-
-    public CardOrientation getCardOrientation() {
-        return mCardOrientation;
     }
 
     public void setCardSuit(CardSuit cardSuit) {
@@ -57,34 +34,14 @@ public class Card extends ImageView {
         this.mCardNumber = cardNumber;
     }
 
-    public void setCardDisplayState(CardDisplayState cardDisplayState) {
-        this.mCardDisplayState = cardDisplayState;
-    }
-
-    public void setCardOrientation(CardOrientation cardOrientation) {
-        this.mCardOrientation = cardOrientation;
-    }
-
     private CardSuit mCardSuit;
     private CardNumber mCardNumber;
-    private CardDisplayState mCardDisplayState;
-    private CardOrientation mCardOrientation;
 
-    public Card(Context context){
-        super(context);
-    }
-
-    public Card(Context context, CardSuit suit, CardNumber number){
-        super(context);
+    public Card(CardSuit suit, CardNumber number){
         mCardSuit = suit;
         mCardNumber = number;
-        loadImage();
     }
 
-    public void loadImage()
-    {
-        this.setImageBitmap(getFrontBitmap());
-    }
     public String getDrawableName()
     {
         String name = "";
@@ -146,44 +103,6 @@ public class Card extends ImageView {
                 name += 'k';
                 break;
         }
-        //return name + ".png";
         return name;
     }
-    public Bitmap getFrontBitmap() {
-        return getBitmap(getDrawableName());
-    }
-
-    public Drawable getAndroidDrawable(String pDrawableName){
-        int resourceId = this.getContext().getResources().getIdentifier(pDrawableName, "drawable", BuildConfig.APPLICATION_ID);
-        String name = this.getContext().getResources().getResourceName(resourceId);
-        if(resourceId==0){
-            return null;
-        } else {
-            Resources.Theme theme = null;
-            return this.getContext().getResources().getDrawable(resourceId);
-            //return Resources.getSystem().getDrawable(resourceId, theme);
-        }
-    }
-    public Bitmap getBitmap(Drawable d) {
-        Bitmap image = ((BitmapDrawable) d).getBitmap();
-        return image;
-    }
-    public Bitmap getHorizontalBackBitmap() {
-        return getBitmap("b1fh");
-    }
-    public Bitmap getVerticalBackBitmap() {
-        return getBitmap("b1fv");
-    }
-    public Bitmap getBitmap(String drawableName)
-    {
-        Drawable d  = getAndroidDrawable(drawableName);
-        Bitmap bMap = getBitmap(d);
-        return bMap;
-    }
-    private class CardToImageIdMap {
-        public CardType cardType;
-        public CardNumber cardNumber;
-        public BitmapFactory.Options imageId;
-    }
-
 }
