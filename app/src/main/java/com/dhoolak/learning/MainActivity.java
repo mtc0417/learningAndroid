@@ -1,5 +1,6 @@
 package com.dhoolak.learning;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,16 +26,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        LinearLayout bottomLayout = (LinearLayout) findViewById(R.id.bottom);
-        ImageView image = new ImageView(this);
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fv);
-        image.setImageBitmap(bMap);
-        bottomLayout.addView(image);
-        //l_layout.setOrientation(RelativeLayout.VERTICAL);
+        RelativeLayout bottomLayout = (RelativeLayout) findViewById(R.id.bottom);
 
         LinearLayout leftLayout = (LinearLayout) findViewById(R.id.left);
         ImageView image2 = new ImageView(this);
-        bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fh);
+        Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fh);
         image2.setImageBitmap(bMap);
         leftLayout.addView(image2);
         //leftLayout.setOrientation(LinearLayout.VERTICAL);
@@ -42,10 +39,45 @@ public class MainActivity extends Activity {
         image3.setImageBitmap(bMap);
         leftLayout.addView(image3);
 
-        CardView card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.J));
+        CardView card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N1));
         bottomLayout.addView(card);
         card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N2));
         bottomLayout.addView(card);
+        card.setX(50);
+
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
+        bottomLayout.addView(card);
+        card.setX(50*2);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N4));
+        bottomLayout.addView(card);
+        card.setX(50*3);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N5));
+        bottomLayout.addView(card);
+        card.setX(50*4);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N6));
+        bottomLayout.addView(card);
+        card.setX(50*5);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N7));
+        bottomLayout.addView(card);
+        card.setX(50*6);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N8));
+        bottomLayout.addView(card);
+        card.setX(50*7);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N9));
+        bottomLayout.addView(card);
+        card.setX(50*8);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N10));
+        bottomLayout.addView(card);
+        card.setX(50*9);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.J));
+        bottomLayout.addView(card);
+        card.setX(50*10);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.Q));
+        bottomLayout.addView(card);
+        card.setX(50*11);
+        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.K));
+        bottomLayout.addView(card);
+        card.setX(50*12);
 
         Button btn1 = new Button(this);
         btn1.setText("Kanha Natwarlal Tripathi");

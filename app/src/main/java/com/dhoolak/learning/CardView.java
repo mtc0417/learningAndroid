@@ -52,7 +52,22 @@ public class CardView extends ImageView {
 
     public void loadImage()
     {
-        this.setImageBitmap(getFrontBitmap());
+        Bitmap bm;
+        if(mCardDisplayState == CardDisplayState.OPEN)
+        {
+            bm = getFrontBitmap();
+        }
+        else
+        {
+            if(mCardOrientation == CardOrientation.HORIZONTAL) {
+                bm = getHorizontalBackBitmap();
+            }
+            else
+            {
+                bm = getVerticalBackBitmap();
+            }
+        }
+        this.setImageBitmap(bm);
     }
     public Bitmap getFrontBitmap() {
         return getBitmap(mCard.getDrawableName());
