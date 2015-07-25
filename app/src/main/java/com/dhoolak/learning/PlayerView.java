@@ -1,6 +1,7 @@
 package com.dhoolak.learning;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class PlayerView extends View{
     public enum PlayerType {
-        PLAYER_TYPE_ME, PLAYER_TYPE_MY_FRIEND, PLAYER_TYPE_OPPONENT
+        PLAYER_TYPE_ME , PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_OPPONENT_RIGHT
     }
     public ArrayList<CardView> getCardList() {
         return mCardList;
@@ -21,12 +22,28 @@ public class PlayerView extends View{
     }
 
     protected ArrayList<CardView> mCardList;
+
+    public PlayerType getPlayerType() {
+        return mPlayerType;
+    }
+
+    public void setPlayerType(PlayerType playerType) {
+        this.mPlayerType = playerType;
+    }
+
     protected PlayerType mPlayerType;
-    public PlayerView(Context c, PlayerType pt)
+    public PlayerView(Context c)
     {
         super(c);
         mCardList = new ArrayList<CardView>();
+    }
+    public PlayerView(Context c, PlayerType pt)
+    {
+        this(c);
         mPlayerType = pt;
+    }
+    public PlayerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
     public void addCard(Card c)
     {
@@ -34,11 +51,12 @@ public class PlayerView extends View{
         CardView.CardOrientation cardOrientation = CardView.CardOrientation.HORIZONTAL;
         switch (mPlayerType)
         {
-            case PLAYER_TYPE_OPPONENT:
+            case PLAYER_TYPE_OPPONENT_LEFT:
+            case PLAYER_TYPE_OPPONENT_RIGHT:
                 displayState = CardView.CardDisplayState.CLOSE;
                 cardOrientation = CardView.CardOrientation.HORIZONTAL;
                 break;
-            case PLAYER_TYPE_MY_FRIEND:
+            case PLAYER_TYPE_MY_PARTNER:
                 displayState = CardView.CardDisplayState.CLOSE;
                 cardOrientation = CardView.CardOrientation.VERTICAL;
                 break;
@@ -50,6 +68,7 @@ public class PlayerView extends View{
         CardView card = new CardView(this.getContext(), c);
         card.setCardDisplayState(displayState);
         card.setCardOrientation(cardOrientation);
+        card.loadImage();
         mCardList.add(card);
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlayerView">
+        <attr name="playerType" format="enum">
+            <enum name="me" value="0"/>
+            <enum name="partner" value="1"/>
+            <enum name="opponentLeft" value="2"/>
+            <enum name="opponentRight" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>

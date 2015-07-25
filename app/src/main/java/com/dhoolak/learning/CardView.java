@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
@@ -47,10 +48,11 @@ public class CardView extends ImageView {
     public CardView(Context context, Card card){
         super(context);
         mCard = card;
-        loadImage();
     }
-
-    public void loadImage()
+    public CardView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+    public void loadImage() // call externally after setting orientation and display state
     {
         Bitmap bm;
         if(mCardDisplayState == CardDisplayState.OPEN)
@@ -86,6 +88,7 @@ public class CardView extends ImageView {
     }
     public Bitmap getBitmap(Drawable d) {
         Bitmap image = ((BitmapDrawable) d).getBitmap();
+        System.out.println("Image Height:" + image.getHeight() + " width:" + image.getWidth());
         return image;
     }
     public Bitmap getHorizontalBackBitmap() {
