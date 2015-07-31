@@ -2,8 +2,11 @@ package com.dhoolak.learning;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -74,13 +77,64 @@ public class PlayerView{
         mCardList.add(card);
         Collections.sort(mCardList);
         mLayout.addView(card);
+        redraw();
+    }
+    public CardView removeCard(Card card)
+    {
+        // find cardView
+        CardView view = null;
+        for(CardView v : mCardList)
+        {
+            if(v.equals(card))
+            {
+                view = v;
+                break;
+            }
+        }
+        if(view == null)
+        {
+            return view;
+        }
+        mCardList.remove(view);
+        mLayout.removeView(view);
+        redraw();
+        return view;
+    }
+    protected void redraw()
+    {
+        if(mCardList.size() == 0)
+        {
+            return;
+        }
+        int cardOverlappingOffset = 45;
+
+        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displaymetrics);
+        int screenWidth = displaymetrics.widthPixels;
+        int screenHeight = displaymetrics.heightPixels;
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        int cardWidth = mCardList.get(0).getOriginalWidth();
+        int cardHeight = mCardList.get(0).getoriginalHeight();
+        int layoutWidth = mLayout.getWidth();
+        int layoutHeight = mLayout.getHeight();
+        int leftOffset = (layoutWidth - (cardWidth + cardOverlappingOffset * (mCardList.size()-1)))/2;
+        int topOffset = (layoutHeight - cardHeight)/2;
+        System.out.println("display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
+        for(int i = 0; i < mCardList.size(); i++)
+        {
+            CardView card = mCardList.get(i);
+            card.setZ(i);
+            card.setX(leftOffset + cardOverlappingOffset * i);
+            card.setY(topOffset);
+            //card.invalidate();
+        }
+        mLayout.invalidate();
     }
     protected Context getContext()
     {
         return mLayout.getContext();
-    }
-    public void addView(View view)
-    {
-        mLayout.addView(view);
     }
 }

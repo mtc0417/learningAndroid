@@ -14,6 +14,16 @@ import android.widget.ImageView;
  */
 public class CardView extends ImageView  implements Comparable<CardView>{
 
+    public int getOriginalWidth() {
+        return mWidth;
+    }
+
+    public int getoriginalHeight() {
+        return mHeight;
+    }
+
+    private int mWidth;
+    private int mHeight;
     public enum CardDisplayState {
         OPEN, CLOSE
     }
@@ -32,6 +42,10 @@ public class CardView extends ImageView  implements Comparable<CardView>{
     public boolean equals(CardView card)
     {
         return this.mCard.equals(card.mCard);
+    }
+    public boolean equals(Card card)
+    {
+        return this.mCard.equals(card);
     }
     public CardDisplayState getCardDisplayState() {
         return mCardDisplayState;
@@ -100,7 +114,9 @@ public class CardView extends ImageView  implements Comparable<CardView>{
     }
     public Bitmap getBitmap(Drawable d) {
         Bitmap image = ((BitmapDrawable) d).getBitmap();
-        System.out.println("Image Height:" + image.getHeight() + " width:" + image.getWidth());
+        mWidth = image.getWidth();
+        mHeight = image.getHeight();
+        //System.out.println("Image Height:" + image.getHeight() + " width:" + image.getWidth());
         return image;
     }
     public Bitmap getHorizontalBackBitmap() {

@@ -66,12 +66,6 @@
             android:background="@color/gray"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
-            <com.dhoolak.learning.PlayerView
-            custom:playerType="me"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:id="@+id/mainPlayerView"/>
-
         </RelativeLayout>
 
 </LinearLayout>
