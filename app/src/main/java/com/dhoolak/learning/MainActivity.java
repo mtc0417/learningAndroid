@@ -26,8 +26,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        RelativeLayout bottomLayout = (RelativeLayout) findViewById(R.id.bottom);
-        //PlayerViewH bottomLayout = (PlayerViewH) findViewById(R.id.mainPlayerView);
+        //RelativeLayout bottomLayout = (RelativeLayout) findViewById(R.id.bottom);
+        PlayerViewH bottomLayout = new PlayerViewH((RelativeLayout)findViewById(R.id.bottom), PlayerView.PlayerType.PLAYER_TYPE_ME);
         LinearLayout leftLayout = (LinearLayout) findViewById(R.id.left);
         ImageView image2 = new ImageView(this);
         Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fh);
@@ -103,7 +103,9 @@ public class MainActivity extends Activity {
         card.setCardDisplayState(CardView.CardDisplayState.OPEN);
         card.loadImage();
         bottomLayout.addView(card);
-        card.setX(50*12);
+        card.setX(50 * 12);
+
+        bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N1));
 
         Button btn1 = new Button(this);
         btn1.setText("Kanha Natwarlal Tripathi");

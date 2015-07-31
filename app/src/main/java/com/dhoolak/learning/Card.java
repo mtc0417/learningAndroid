@@ -3,21 +3,15 @@ package com.dhoolak.learning;
 /**
  * Created by prakasht on 7/22/2015.
  */
-public class Card {
+public class Card  implements Comparable<Card>{
 
     public enum CardSuit { // Clubs, Spades, Hearts, Diamonds
-        CHIDI, HUKUM, PAAN, EENT
+        UNKNOWN, CHIDI, HUKUM, PAAN, EENT
     }
     public enum CardNumber {
-        N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, J, Q, K
+        N2, N3, N4, N5, N6, N7, N8, N9, N10, J, Q, K, N1
     }
-    public enum CardNumberTest {
-        N1 {
-            public String toString() {
-                return "this is one";
-            }
-        }
-    }
+
     public CardSuit getCardSuit() {
         return mCardSuit;
     }
@@ -33,6 +27,11 @@ public class Card {
     public void setCardNumber(CardNumber cardNumber) {
         this.mCardNumber = cardNumber;
     }
+    public boolean isTrump()
+    {
+        Game game = Game.getInstance();
+        return game.isTrumpSet() && game.getTrump().equals(mCardSuit);
+    }
 
     private CardSuit mCardSuit;
     private CardNumber mCardNumber;
@@ -40,6 +39,28 @@ public class Card {
     public Card(CardSuit suit, CardNumber number){
         mCardSuit = suit;
         mCardNumber = number;
+    }
+
+    public boolean equals(Card card)
+    {
+        return (mCardSuit.equals(card.getCardSuit()) && mCardNumber.equals(card.getCardNumber()));
+    }
+
+    public int compareTo(Card card)
+    {
+        if(mCardSuit.equals(card.getCardSuit()))
+        {
+            return mCardNumber.compareTo(card.getCardNumber());
+        }
+        if(this.isTrump())
+        {
+            return 1;
+        }
+        if(card.isTrump())
+        {
+            return -1;
+        }
+        return mCardSuit.compareTo(card.getCardSuit());
     }
 
     public String getDrawableName()
@@ -59,6 +80,8 @@ public class Card {
             case PAAN: // Hearts
                 name += 'h';
                 break;
+            default:
+                return "ec";
         }
 
         switch(mCardNumber)

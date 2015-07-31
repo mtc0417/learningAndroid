@@ -12,7 +12,7 @@ import android.widget.ImageView;
 /**
  * Created by prakasht on 7/22/2015.
  */
-public class CardView extends ImageView {
+public class CardView extends ImageView  implements Comparable<CardView>{
 
     public enum CardDisplayState {
         OPEN, CLOSE
@@ -21,6 +21,18 @@ public class CardView extends ImageView {
         VERTICAL, HORIZONTAL
     }
 
+    public boolean isTrump()
+    {
+        return mCard.isTrump();
+    }
+    public int compareTo(CardView card)
+    {
+        return this.mCard.compareTo(card.mCard);
+    }
+    public boolean equals(CardView card)
+    {
+        return this.mCard.equals(card.mCard);
+    }
     public CardDisplayState getCardDisplayState() {
         return mCardDisplayState;
     }

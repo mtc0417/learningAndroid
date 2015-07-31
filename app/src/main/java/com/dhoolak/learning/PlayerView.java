@@ -3,13 +3,17 @@ package com.dhoolak.learning;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by prakasht on 7/24/2015.
  */
-public class PlayerView extends View{
+public class PlayerView{
+
     public enum PlayerType {
         PLAYER_TYPE_ME , PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_OPPONENT_RIGHT
     }
@@ -32,18 +36,16 @@ public class PlayerView extends View{
     }
 
     protected PlayerType mPlayerType;
-    public PlayerView(Context c)
+    protected ViewGroup mLayout;
+    public PlayerView(ViewGroup layout)
     {
-        super(c);
+        mLayout = layout;
         mCardList = new ArrayList<CardView>();
     }
-    public PlayerView(Context c, PlayerType pt)
+    public PlayerView(ViewGroup layout, PlayerType pt)
     {
-        this(c);
+        this(layout);
         mPlayerType = pt;
-    }
-    public PlayerView(Context context, AttributeSet attrs) {
-        super(context, attrs);
     }
     public void addCard(Card c)
     {
@@ -70,5 +72,15 @@ public class PlayerView extends View{
         card.setCardOrientation(cardOrientation);
         card.loadImage();
         mCardList.add(card);
+        Collections.sort(mCardList);
+        mLayout.addView(card);
+    }
+    protected Context getContext()
+    {
+        return mLayout.getContext();
+    }
+    public void addView(View view)
+    {
+        mLayout.addView(view);
     }
 }

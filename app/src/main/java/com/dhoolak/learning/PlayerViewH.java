@@ -2,20 +2,18 @@ package com.dhoolak.learning;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 
 /**
  * Created by prakasht on 7/24/2015.
  */
 public class PlayerViewH extends PlayerView {
-    public PlayerViewH(Context c)
+    public PlayerViewH(ViewGroup viewGroup)
     {
-        super(c);
+        super(viewGroup);
     }
-    public PlayerViewH(Context c, PlayerType pt)
+    public PlayerViewH(ViewGroup c, PlayerType pt)
     {
         super(c, pt);
-    }
-    public PlayerViewH(Context context, AttributeSet attrs) {
-        super(context, attrs);
     }
 }
