@@ -8,8 +8,8 @@ import android.view.ViewGroup;
  * Created by prakasht on 7/24/2015.
  */
 public class PlayerViewV extends PlayerView {
-    public PlayerViewV(ViewGroup c, PlayerType pt)
+    public PlayerViewV(Context c, AttributeSet attr)
     {
-        super(c, pt);
+        super(c, attr);
     }
 }

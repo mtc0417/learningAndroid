@@ -15,7 +15,7 @@ import java.util.Collections;
 /**
  * Created by prakasht on 7/24/2015.
  */
-public class PlayerView{
+public class PlayerView extends ViewGroup{
 
     public enum PlayerType {
         PLAYER_TYPE_ME , PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_OPPONENT_RIGHT
@@ -39,16 +39,40 @@ public class PlayerView{
     }
 
     protected PlayerType mPlayerType;
-    protected ViewGroup mLayout;
-    public PlayerView(ViewGroup layout)
+    //protected ViewGroup mLayout;
+    public PlayerView(Context c)
     {
-        mLayout = layout;
+        super(c);
         mCardList = new ArrayList<CardView>();
     }
-    public PlayerView(ViewGroup layout, PlayerType pt)
-    {
-        this(layout);
-        mPlayerType = pt;
+    public PlayerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mCardList = new ArrayList<CardView>();
+        initView(context);
+
+    }
+    public PlayerView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        mCardList = new ArrayList<CardView>();
+        initView(context);
+    }
+    protected void initView(Context context){
+        //View.inflate(context, R.id.mainPlayerView, null);  //correct way to inflate..
+        PlayerView bottomLayout = (PlayerView)findViewById(R.id.mainPlayerView);
+        bottomLayout.setPlayerType(PlayerView.PlayerType.PLAYER_TYPE_ME);
+        bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N5));
+        bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
+        bottomLayout.addCard(new Card(Card.CardSuit.EENT, Card.CardNumber.N10));
+        bottomLayout.addCard(new Card(Card.CardSuit.PAAN, Card.CardNumber.N1));
+    }
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        System.out.println("onLayout:changed:" + changed + ", left:" + left + ", top:" + top + ", right:" + right + ", bottom:" + bottom);
+        //redraw(left, top, right, bottom);
+        redraw(0, 0, right-left, bottom-top);
+        for(int i = 0 ; i < getChildCount() ; i++){
+            //getChildAt(i).layout(left, top, right, bottom);
+        }
     }
     public void addCard(Card c)
     {
@@ -76,8 +100,9 @@ public class PlayerView{
         card.loadImage();
         mCardList.add(card);
         Collections.sort(mCardList);
-        mLayout.addView(card);
-        redraw();
+        addView(card);
+        //redraw();
+        invalidate();
     }
     public CardView removeCard(Card card)
     {
@@ -96,8 +121,9 @@ public class PlayerView{
             return view;
         }
         mCardList.remove(view);
-        mLayout.removeView(view);
-        redraw();
+        removeView(view);
+        //redraw();
+        invalidate();
         return view;
     }
     protected void redraw()
@@ -118,8 +144,8 @@ public class PlayerView{
         int height = display.getHeight();
         int cardWidth = mCardList.get(0).getOriginalWidth();
         int cardHeight = mCardList.get(0).getoriginalHeight();
-        int layoutWidth = mLayout.getWidth();
-        int layoutHeight = mLayout.getHeight();
+        int layoutWidth = getWidth();
+        int layoutHeight = getHeight();
         int leftOffset = (layoutWidth - (cardWidth + cardOverlappingOffset * (mCardList.size()-1)))/2;
         int topOffset = (layoutHeight - cardHeight)/2;
         System.out.println("display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
@@ -131,10 +157,41 @@ public class PlayerView{
             card.setY(topOffset);
             //card.invalidate();
         }
-        mLayout.invalidate();
+        invalidate();
     }
-    protected Context getContext()
+
+    protected void redraw(int left, int top, int right, int bottom)
     {
-        return mLayout.getContext();
+        if(mCardList.size() == 0)
+        {
+            return;
+        }
+        int cardOverlappingOffset = 45;
+
+        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displaymetrics);
+        int screenWidth = displaymetrics.widthPixels;
+        int screenHeight = displaymetrics.heightPixels;
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        int cardWidth = mCardList.get(0).getOriginalWidth();
+        int cardHeight = mCardList.get(0).getoriginalHeight();
+        int layoutWidth = right-left;//getWidth();
+        int layoutHeight = bottom-top;//getHeight();
+        int leftOffset = (layoutWidth - (cardWidth + cardOverlappingOffset * (mCardList.size()-1)))/2;
+        int topOffset = (layoutHeight - cardHeight)/2;
+        System.out.println("children:" + mCardList.size() + ", display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
+        for(int i = 0; i < mCardList.size(); i++)
+        {
+            CardView card = mCardList.get(i);
+            card.setZ(i);
+            //card.setX(left + leftOffset + cardOverlappingOffset * i);
+            //card.setY(top + topOffset);
+            card.layout(left + leftOffset + cardOverlappingOffset * i, top + topOffset, left + leftOffset + cardOverlappingOffset * i + cardWidth, top + topOffset + cardHeight);
+            //card.invalidate();
+        }
+        //invalidate();
     }
 }

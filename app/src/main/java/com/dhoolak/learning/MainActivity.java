@@ -108,10 +108,15 @@ public class MainActivity extends Activity {
 
         bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N1));
         */
+
+
+
         Button btn1 = new Button(this);
         btn1.setText("Kanha Natwarlal Tripathi");
 
         //l_layout.addView(btn1);
+
+
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,11 +131,8 @@ public class MainActivity extends Activity {
         // TODO Auto-generated method stub
         super.onWindowFocusChanged(hasFocus);
         //Here you can get the size!
-        PlayerViewH bottomLayout = new PlayerViewH((RelativeLayout)findViewById(R.id.bottom), PlayerView.PlayerType.PLAYER_TYPE_ME);
-        bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N5));
-        bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
-        bottomLayout.addCard(new Card(Card.CardSuit.PAAN, Card.CardNumber.N10));
-        bottomLayout.addCard(new Card(Card.CardSuit.PAAN, Card.CardNumber.N1));
+        //PlayerViewH bottomLayout = new PlayerViewH((RelativeLayout)findViewById(R.id.bottom), PlayerView.PlayerType.PLAYER_TYPE_ME);
+
     }
     private void alert()
     {

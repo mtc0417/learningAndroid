@@ -6,7 +6,7 @@ package com.dhoolak.learning;
 public class Card  implements Comparable<Card>{
 
     public enum CardSuit { // Clubs, Spades, Hearts, Diamonds
-        UNKNOWN, CHIDI, HUKUM, PAAN, EENT
+        UNKNOWN, HUKUM, PAAN, CHIDI, EENT
     }
     public enum CardNumber {
         N2, N3, N4, N5, N6, N7, N8, N9, N10, J, Q, K, N1
