@@ -18,7 +18,7 @@ import java.util.Collections;
 public class PlayerView extends ViewGroup{
 
     public enum PlayerType {
-        PLAYER_TYPE_ME , PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_OPPONENT_RIGHT
+        PLAYER_TYPE_ME , PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_RIGHT
     }
     public ArrayList<CardView> getCardList() {
         return mCardList;
@@ -47,19 +47,57 @@ public class PlayerView extends ViewGroup{
     }
     public PlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        int playerType = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/com.dhoolak.learning","playerType", 3);
+        String type = attrs.getAttributeName(0);
+        /*
+        for(int i = 0; i < attrs.getAttributeCount(); i++)
+        {
+            System.out.println("Listing attributes i:" + i + ", name :" + attrs.getAttributeName(i));
+            if(attrs.getAttributeName(i).equals("playerType"))
+            {
+                playerType = attrs.getAttributeIntValue(i, 3);
+                break;
+            }
+        }
+        */
+        mPlayerType = PlayerType.values()[playerType];
+        System.out.println("mPlayerType:" + mPlayerType + ", indexString(0):" + type);
+        setGlobalPlayerView();
         mCardList = new ArrayList<CardView>();
         initView(context);
 
     }
+    private void setGlobalPlayerView()
+    {
+        switch(mPlayerType)
+        {
+            case PLAYER_TYPE_ME:
+                Game.getInstance().setPlayerMe(this);
+                break;
+            case PLAYER_TYPE_OPPONENT_LEFT:
+                Game.getInstance().setPlayerOpponentLeft(this);
+                break;
+            case PLAYER_TYPE_MY_PARTNER:
+                Game.getInstance().setPlayerMyPartner(this);
+                break;
+            case PLAYER_TYPE_OPPONENT_RIGHT:
+                Game.getInstance().setPlayerOpponentRight(this);
+                break;
+        }
+    }
     public PlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mCardList = new ArrayList<CardView>();
+        int playerType = attrs.getAttributeIntValue(context.getPackageName(), "playerType", 0);
+        String type = attrs.getAttributeName(5);
+        System.out.println("def mPlayerType:" + playerType + ", inDexString(5):" + type);
+
         initView(context);
     }
     protected void initView(Context context){
         //View.inflate(context, R.id.mainPlayerView, null);  //correct way to inflate..
-        PlayerView bottomLayout = (PlayerView)findViewById(R.id.mainPlayerView);
-        bottomLayout.setPlayerType(PlayerView.PlayerType.PLAYER_TYPE_ME);
+        PlayerView bottomLayout = this;//(PlayerView)findViewById(R.id.mainPlayerView);
+        //bottomLayout.setPlayerType(PlayerView.PlayerType.PLAYER_TYPE_ME);
         bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N5));
         bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
         bottomLayout.addCard(new Card(Card.CardSuit.EENT, Card.CardNumber.N10));
@@ -69,7 +107,13 @@ public class PlayerView extends ViewGroup{
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         System.out.println("onLayout:changed:" + changed + ", left:" + left + ", top:" + top + ", right:" + right + ", bottom:" + bottom);
         //redraw(left, top, right, bottom);
-        redraw(0, 0, right-left, bottom-top);
+        if(mPlayerType.equals(PlayerType.PLAYER_TYPE_ME) || mPlayerType.equals(PlayerType.PLAYER_TYPE_MY_PARTNER)) {
+            redrawHorizontal(0, 0, right - left, bottom - top);
+        }
+        else
+        {
+            redrawVertical(0, 0, right-left, bottom-top);
+        }
         for(int i = 0 ; i < getChildCount() ; i++){
             //getChildAt(i).layout(left, top, right, bottom);
         }
@@ -160,7 +204,7 @@ public class PlayerView extends ViewGroup{
         invalidate();
     }
 
-    protected void redraw(int left, int top, int right, int bottom)
+    protected void redrawHorizontal(int left, int top, int right, int bottom)
     {
         if(mCardList.size() == 0)
         {
@@ -190,6 +234,41 @@ public class PlayerView extends ViewGroup{
             //card.setX(left + leftOffset + cardOverlappingOffset * i);
             //card.setY(top + topOffset);
             card.layout(left + leftOffset + cardOverlappingOffset * i, top + topOffset, left + leftOffset + cardOverlappingOffset * i + cardWidth, top + topOffset + cardHeight);
+            //card.invalidate();
+        }
+        //invalidate();
+    }
+
+    protected void redrawVertical(int left, int top, int right, int bottom)
+    {
+        if(mCardList.size() == 0)
+        {
+            return;
+        }
+        int cardOverlappingOffset = 45;
+
+        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(displaymetrics);
+        int screenWidth = displaymetrics.widthPixels;
+        int screenHeight = displaymetrics.heightPixels;
+        Display display = wm.getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        int cardWidth = mCardList.get(0).getOriginalWidth();
+        int cardHeight = mCardList.get(0).getoriginalHeight();
+        int layoutWidth = right-left;//getWidth();
+        int layoutHeight = bottom-top;//getHeight();
+        int topOffset = (layoutHeight - (cardHeight + cardOverlappingOffset * (mCardList.size()-1)))/2;
+        int leftOffset = (layoutWidth - cardWidth)/2;
+        System.out.println("children:" + mCardList.size() + ", display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
+        for(int i = 0; i < mCardList.size(); i++)
+        {
+            CardView card = mCardList.get(i);
+            card.setZ(i);
+            //card.setX(left + leftOffset + cardOverlappingOffset * i);
+            //card.setY(top + topOffset);
+            card.layout(left + leftOffset, top + topOffset + cardOverlappingOffset * i, left + leftOffset + cardWidth, top + topOffset + cardOverlappingOffset * i + cardHeight);
             //card.invalidate();
         }
         //invalidate();
