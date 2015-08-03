@@ -62,10 +62,9 @@ public class PlayerView extends ViewGroup{
         */
         mPlayerType = PlayerType.values()[playerType];
         System.out.println("mPlayerType:" + mPlayerType + ", indexString(0):" + type);
-        setGlobalPlayerView();
         mCardList = new ArrayList<CardView>();
         initView(context);
-
+        setGlobalPlayerView();
     }
     private void setGlobalPlayerView()
     {
@@ -95,13 +94,11 @@ public class PlayerView extends ViewGroup{
         initView(context);
     }
     protected void initView(Context context){
-        //View.inflate(context, R.id.mainPlayerView, null);  //correct way to inflate..
-        PlayerView bottomLayout = this;//(PlayerView)findViewById(R.id.mainPlayerView);
-        //bottomLayout.setPlayerType(PlayerView.PlayerType.PLAYER_TYPE_ME);
-        bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N5));
-        bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
-        bottomLayout.addCard(new Card(Card.CardSuit.EENT, Card.CardNumber.N10));
-        bottomLayout.addCard(new Card(Card.CardSuit.PAAN, Card.CardNumber.N1));
+        //PlayerView bottomLayout = this;//(PlayerView)findViewById(R.id.mainPlayerView);
+        //bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N5));
+        //bottomLayout.addCard(new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
+        //bottomLayout.addCard(new Card(Card.CardSuit.EENT, Card.CardNumber.N10));
+        //bottomLayout.addCard(new Card(Card.CardSuit.PAAN, Card.CardNumber.N1));
     }
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -116,6 +113,13 @@ public class PlayerView extends ViewGroup{
         }
         for(int i = 0 ; i < getChildCount() ; i++){
             //getChildAt(i).layout(left, top, right, bottom);
+        }
+    }
+    public void addCard(Card[] cards)
+    {
+        for(Card card : cards)
+        {
+            addCard(card);
         }
     }
     public void addCard(Card c)
@@ -143,7 +147,7 @@ public class PlayerView extends ViewGroup{
         card.setCardOrientation(cardOrientation);
         card.loadImage();
         mCardList.add(card);
-        Collections.sort(mCardList);
+        Collections.sort(mCardList, Collections.reverseOrder());
         addView(card);
         //redraw();
         invalidate();

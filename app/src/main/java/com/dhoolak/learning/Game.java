@@ -5,13 +5,27 @@ package com.dhoolak.learning;
  */
 public class Game {
     private static Game mInstance = new Game();
-
+    private static Object mutex= new Object();
+    public static Game getInstance()
+    {
+        if(mInstance != null)
+        {
+            return mInstance;
+        }
+        synchronized (mutex)
+        {
+            if(mInstance == null)
+                mInstance = new Game();
+        }
+        return mInstance;
+    }
     public PlayerView getPlayerMe() {
         return mPlayerMe;
     }
 
     public void setPlayerMe(PlayerView mPlayerMe) {
         this.mPlayerMe = mPlayerMe;
+        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerMyPartner() {
@@ -20,6 +34,7 @@ public class Game {
 
     public void setPlayerMyPartner(PlayerView mPlayerMyPartner) {
         this.mPlayerMyPartner = mPlayerMyPartner;
+        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerOpponentLeft() {
@@ -28,6 +43,7 @@ public class Game {
 
     public void setPlayerOpponentLeft(PlayerView mPlayerOpponentLeft) {
         this.mPlayerOpponentLeft = mPlayerOpponentLeft;
+        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerOpponentRight() {
@@ -36,6 +52,7 @@ public class Game {
 
     public void setPlayerOpponentRight(PlayerView mPlayerOpponentRight) {
         this.mPlayerOpponentRight = mPlayerOpponentRight;
+        checkIfAllPlayersLoaded();
     }
 
     private PlayerView mPlayerMe;
@@ -61,11 +78,29 @@ public class Game {
     public void setTrump(Card.CardSuit mTrump) {
         this.mTrump = mTrump;
     }
-
-    private Card.CardSuit mTrump;
-    public static Game getInstance()
+    private void checkIfAllPlayersLoaded()
     {
-        return mInstance;
+        if(mPlayerOpponentRight != null && mPlayerMyPartner != null && mPlayerOpponentLeft != null && mPlayerMe != null)
+        {
+            onAllPlayersLoaded();
+        }
     }
-
+    public void onAllPlayersLoaded()
+    {
+        Deck deck = Deck.getInstance();
+        deck.shuffle();
+        mPlayerMe.addCard(deck.getCards(5));
+        mPlayerOpponentLeft.addCard(deck.getCards(5));
+        mPlayerMyPartner.addCard(deck.getCards(5));
+        mPlayerOpponentRight.addCard(deck.getCards(5));
+        for(int i = 0; i < 2; i++)
+        {
+            mPlayerMe.addCard(deck.getCards(4));
+            mPlayerOpponentLeft.addCard(deck.getCards(4));
+            mPlayerMyPartner.addCard(deck.getCards(4));
+            mPlayerOpponentRight.addCard(deck.getCards(4));
+        }
+        System.out.println("Cards distributed");
+    }
+    private Card.CardSuit mTrump;
 }

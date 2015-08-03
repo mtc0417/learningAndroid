@@ -63,6 +63,10 @@ public class Card  implements Comparable<Card>{
         return mCardSuit.compareTo(card.getCardSuit());
     }
 
+    public String toString()
+    {
+        return mCardSuit.toString() + mCardNumber.toString();
+    }
     public String getDrawableName()
     {
         String name = "";

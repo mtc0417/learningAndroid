@@ -26,98 +26,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        /*
-        //RelativeLayout bottomLayout = (RelativeLayout) findViewById(R.id.bottom);
-        PlayerViewH bottomLayout = new PlayerViewH((RelativeLayout)findViewById(R.id.bottom), PlayerView.PlayerType.PLAYER_TYPE_ME);
-        LinearLayout leftLayout = (LinearLayout) findViewById(R.id.left);
-        ImageView image2 = new ImageView(this);
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fh);
-        image2.setImageBitmap(bMap);
-        leftLayout.addView(image2);
-        //leftLayout.setOrientation(LinearLayout.VERTICAL);
-        ImageView image3 = new ImageView(this);
-        //bMap = BitmapFactory.decodeResource(getResources(), R.drawable.b2fh);
-        image3.setImageBitmap(bMap);
-        leftLayout.addView(image3);
-
-        CardView card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N1));
-        bottomLayout.addView(card);
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N2));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50);
-
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N3));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 2);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N4));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 3);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N5));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 4);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N6));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 5);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N7));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 6);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N8));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 7);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N9));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 8);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.N10));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 9);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.J));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 10);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.Q));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 11);
-        card = new CardView(this, new Card(Card.CardSuit.CHIDI, Card.CardNumber.K));
-        card.setCardDisplayState(CardView.CardDisplayState.OPEN);
-        card.loadImage();
-        bottomLayout.addView(card);
-        card.setX(50 * 12);
-
-        bottomLayout.addCard(new Card(Card.CardSuit.HUKUM, Card.CardNumber.N1));
-        */
-
-
-
         Button btn1 = new Button(this);
         btn1.setText("Kanha Natwarlal Tripathi");
-
-        //l_layout.addView(btn1);
-
-
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,14 +35,6 @@ public class MainActivity extends Activity {
                 //alert();
             }
         });
-    }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        // TODO Auto-generated method stub
-        super.onWindowFocusChanged(hasFocus);
-        //Here you can get the size!
-        //PlayerViewH bottomLayout = new PlayerViewH((RelativeLayout)findViewById(R.id.bottom), PlayerView.PlayerType.PLAYER_TYPE_ME);
-
     }
     private void alert()
     {
