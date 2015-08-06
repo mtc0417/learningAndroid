@@ -45,6 +45,12 @@ public class PlayerView extends ViewGroup{
         super(c);
         mCardList = new ArrayList<CardView>();
     }
+    public PlayerView(Context c, PlayerType playerType)
+    {
+        super(c);
+        mCardList = new ArrayList<CardView>();
+        mPlayerType = playerType;
+    }
     public PlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         int playerType = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/com.dhoolak.learning","playerType", 3);
