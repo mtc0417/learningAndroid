@@ -78,10 +78,11 @@ public class MainLayout extends ViewGroup {
     {
         mPlayerOpponentLeft.removeAllCards();
         mPlayerMyPartner.removeAllCards();
-        mPlayerMyPartner.removeAllCards();
+        mPlayerOpponentRight.removeAllCards();
         mPlayerMe.removeAllCards();
     }
-    public void refresh()
+
+    public void forceRefresh() // normally not needed, only use it when nothing works.
     {
         mPlayerMe.invalidate();
         mPlayerMyPartner.invalidate();
@@ -89,6 +90,7 @@ public class MainLayout extends ViewGroup {
         mPlayerOpponentRight.invalidate();
         this.invalidate();
     }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         System.out.println("MainLayout:onLayout:changed:" + changed + ", left:" + l + ", top:" + t + ", right:" + r + ", bottom:" + b);

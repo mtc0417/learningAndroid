@@ -108,9 +108,6 @@ public class PlayerView extends ViewGroup {
         } else {
             redrawVertical(0, 0, right - left, bottom - top);
         }
-        for (int i = 0; i < getChildCount(); i++) {
-            //getChildAt(i).layout(left, top, right, bottom);
-        }
     }
 
     public void addCard(Card[] cards) {
@@ -119,7 +116,6 @@ public class PlayerView extends ViewGroup {
             addCard(card);
             System.out.printf(" " + card.toString());
         }
-        //this.invalidate();
     }
     public void addCard(Card c) {
         CardView.CardDisplayState displayState = CardView.CardDisplayState.CLOSE;
@@ -146,8 +142,6 @@ public class PlayerView extends ViewGroup {
         mCardList.add(card);
         Collections.sort(mCardList, Collections.reverseOrder());
         addView(card, new LayoutParams(card.getOriginalWidth(), card.getOriginalHeight()));
-        //redraw();
-        card.invalidate();
     }
     public void removeAllCards()
     {
@@ -197,9 +191,7 @@ public class PlayerView extends ViewGroup {
             card.setZ(i);
             card.setX(leftOffset + cardOverlappingOffset * i);
             card.setY(topOffset);
-            //card.invalidate();
         }
-        invalidate();
     }
 
     protected void redraw(int left, int top, int right, int bottom)
@@ -231,12 +223,8 @@ public class PlayerView extends ViewGroup {
         {
             CardView card = mCardList.get(i);
             card.setZ(i);
-            //card.setX(left + leftOffset + cardOverlappingOffset * i);
-            //card.setY(top + topOffset);
             card.layout(left + leftOffset + cardOverlappingOffset * i, top + topOffset, left + leftOffset + cardOverlappingOffset * i + cardWidth, top + topOffset + cardHeight);
-            //card.invalidate();
         }
-        //invalidate();
     }
 
     protected void redrawVertical(int left, int top, int right, int bottom)
