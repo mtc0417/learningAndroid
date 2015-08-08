@@ -15,7 +15,10 @@ public class PlayerViewV extends PlayerView {
     {
         super(c, attr);
     }
-
+    public PlayerViewV(Context c, PlayerType playerType)
+    {
+        super(c, playerType);
+    }
     protected void redraw(int left, int top, int right, int bottom)
     {
         if(mCardList.size() == 0)
@@ -33,7 +36,7 @@ public class PlayerViewV extends PlayerView {
         int width = display.getWidth();
         int height = display.getHeight();
         int cardWidth = mCardList.get(0).getOriginalWidth();
-        int cardHeight = mCardList.get(0).getoriginalHeight();
+        int cardHeight = mCardList.get(0).getOriginalHeight();
         int layoutWidth = right-left;//getWidth();
         int layoutHeight = bottom-top;//getHeight();
         int topOffset = (layoutHeight - (cardHeight + cardOverlappingOffset * (mCardList.size()-1)))/2;
@@ -43,11 +46,7 @@ public class PlayerViewV extends PlayerView {
         {
             CardView card = mCardList.get(i);
             card.setZ(i);
-            //card.setX(left + leftOffset + cardOverlappingOffset * i);
-            //card.setY(top + topOffset);
             card.layout(left + leftOffset, top + topOffset + cardOverlappingOffset * i, left + leftOffset + cardWidth, top + topOffset + cardOverlappingOffset * i + cardHeight);
-            //card.invalidate();
         }
-        //invalidate();
     }
 }

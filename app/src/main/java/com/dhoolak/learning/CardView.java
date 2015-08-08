@@ -18,7 +18,7 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         return mWidth;
     }
 
-    public int getoriginalHeight() {
+    public int getOriginalHeight() {
         return mHeight;
     }
 
@@ -130,5 +130,13 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         Drawable d  = getAndroidDrawable(drawableName);
         Bitmap bMap = getBitmap(d);
         return bMap;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = getOriginalWidth();
+        int height = getOriginalHeight();
+        setMeasuredDimension(width, height);
+        System.out.println("CardView:onMeasure: width:" + width + ", height:" + height);
     }
 }

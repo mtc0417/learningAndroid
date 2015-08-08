@@ -25,7 +25,6 @@ public class Game {
 
     public void setPlayerMe(PlayerView mPlayerMe) {
         this.mPlayerMe = mPlayerMe;
-        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerMyPartner() {
@@ -34,7 +33,6 @@ public class Game {
 
     public void setPlayerMyPartner(PlayerView mPlayerMyPartner) {
         this.mPlayerMyPartner = mPlayerMyPartner;
-        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerOpponentLeft() {
@@ -43,7 +41,6 @@ public class Game {
 
     public void setPlayerOpponentLeft(PlayerView mPlayerOpponentLeft) {
         this.mPlayerOpponentLeft = mPlayerOpponentLeft;
-        checkIfAllPlayersLoaded();
     }
 
     public PlayerView getPlayerOpponentRight() {
@@ -52,7 +49,6 @@ public class Game {
 
     public void setPlayerOpponentRight(PlayerView mPlayerOpponentRight) {
         this.mPlayerOpponentRight = mPlayerOpponentRight;
-        checkIfAllPlayersLoaded();
     }
 
     private PlayerView mPlayerMe;
@@ -82,13 +78,14 @@ public class Game {
     {
         if(mPlayerOpponentRight != null && mPlayerMyPartner != null && mPlayerOpponentLeft != null && mPlayerMe != null)
         {
-            onAllPlayersLoaded();
+            //onAllPlayersLoaded();
         }
     }
     public void onAllPlayersLoaded()
     {
         Deck deck = Deck.getInstance();
         deck.shuffle();
+        MainLayout.getInstance().removeAllCards();
         mPlayerMe.addCard(deck.getCards(5));
         mPlayerOpponentLeft.addCard(deck.getCards(5));
         mPlayerMyPartner.addCard(deck.getCards(5));
@@ -100,7 +97,12 @@ public class Game {
             mPlayerMyPartner.addCard(deck.getCards(4));
             mPlayerOpponentRight.addCard(deck.getCards(4));
         }
+        //MainLayout.getInstance().invalidate();
         System.out.println("Cards distributed");
+    }
+    public void onStart()
+    {
+        onAllPlayersLoaded();
     }
     private Card.CardSuit mTrump;
 }
