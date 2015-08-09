@@ -102,11 +102,11 @@ public class PlayerView extends ViewGroup {
         System.out.println("onLayout:changed:" + changed + ", left:" + left + ", top:" + top + ", right:" + right + ", bottom:" + bottom);
         //redraw(left, top, right, bottom);
         //redraw(left, top, right, bottom);
-        //redraw(0, 0, right - left, bottom - top);
+        redraw(0, 0, right - left, bottom - top);
         if (mPlayerType.equals(PlayerType.PLAYER_TYPE_ME) || mPlayerType.equals(PlayerType.PLAYER_TYPE_MY_PARTNER)) {
-            redrawHorizontal(0, 0, right - left, bottom - top);
+            //redrawHorizontal(0, 0, right - left, bottom - top);
         } else {
-            redrawVertical(0, 0, right - left, bottom - top);
+            //redrawVertical(0, 0, right - left, bottom - top);
         }
     }
 
