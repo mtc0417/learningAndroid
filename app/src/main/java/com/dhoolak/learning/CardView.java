@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 /**
@@ -138,5 +140,31 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         int height = getOriginalHeight();
         setMeasuredDimension(width, height);
         System.out.println("CardView:onMeasure: width:" + width + ", height:" + height);
+    }
+
+    public boolean onTouchEvent(MotionEvent ev) {
+        switch (ev.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                //this.setImageAlpha(225);
+
+                AlphaAnimation alpha = new AlphaAnimation(1.0F, 0.5F); // change values as you want
+                alpha.setDuration(1); // Make animation instant
+                alpha.setFillAfter(true); // Tell it to persist after the animation ends
+                // And then on your imageview
+                this.startAnimation(alpha);
+
+                break;
+            default:
+                //this.setImageAlpha(255);
+                alpha = new AlphaAnimation(0.5F, 1.0F); // change values as you want
+                alpha.setDuration(1); // Make animation instant
+                alpha.setFillAfter(true); // Tell it to persist after the animation ends
+                // And then on your imageview
+                this.startAnimation(alpha);
+
+                break;
+        }
+        return true;
     }
 }
