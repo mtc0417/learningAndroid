@@ -67,6 +67,10 @@ public class Card  implements Comparable<Card>{
     {
         return mCardSuit.toString() + mCardNumber.toString();
     }
+    public boolean isDahla()
+    {
+        return mCardNumber.equals(CardNumber.N10);
+    }
     public String getDrawableName()
     {
         String name = "";
