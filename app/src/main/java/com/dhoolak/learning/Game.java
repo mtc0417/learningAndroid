@@ -104,5 +104,18 @@ public class Game {
     {
         onAllPlayersLoaded();
     }
+    public PlayerView getNextPlayer(PlayerView currentPlayer)
+    {
+        PlayerView[] players = getPlayers();
+        int count = players.length;
+        for(int i = 0; i < players.length; i++)
+        {
+            if(currentPlayer.equals(players[i]))
+            {
+                return players[(i+1)%count];
+            }
+        }
+        return null;
+    }
     private Card.CardSuit mTrump;
 }
