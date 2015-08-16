@@ -51,7 +51,8 @@ public class PlayerViewH extends PlayerView {
         for(int i = 0; i < mCardList.size(); i++)
         {
             CardView card = mCardList.get(i);
-            card.setZ(i);
+            //card.setZ(i);
+            card.bringToFront();
             card.layout(left + leftOffset + cardOverlappingOffset * i, top + topOffset, left + leftOffset + cardOverlappingOffset * i + cardWidth, top + topOffset + cardHeight);
         }
     }

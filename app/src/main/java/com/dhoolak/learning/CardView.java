@@ -146,22 +146,26 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         switch (ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
-                //this.setImageAlpha(225);
-
+                this.setImageAlpha(225);
+                /*
                 AlphaAnimation alpha = new AlphaAnimation(1.0F, 0.5F); // change values as you want
                 alpha.setDuration(1); // Make animation instant
                 alpha.setFillAfter(true); // Tell it to persist after the animation ends
                 // And then on your imageview
-                this.startAnimation(alpha);
+                this.startAnimation(alpha); */
 
                 break;
-            default:
-                //this.setImageAlpha(255);
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_HOVER_EXIT:
+            case MotionEvent.ACTION_OUTSIDE:
+            case MotionEvent.ACTION_UP:
+                this.setImageAlpha(255);
+                /*
                 alpha = new AlphaAnimation(0.5F, 1.0F); // change values as you want
                 alpha.setDuration(1); // Make animation instant
                 alpha.setFillAfter(true); // Tell it to persist after the animation ends
                 // And then on your imageview
-                this.startAnimation(alpha);
+                this.startAnimation(alpha); */
 
                 break;
         }
