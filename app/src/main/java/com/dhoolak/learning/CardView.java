@@ -76,6 +76,7 @@ public class CardView extends ImageView  implements Comparable<CardView>{
     public CardView(Context context, Card card){
         super(context);
         mCard = card;
+        this.setBackgroundColor(0xFF000000); // make background black so that making cards semitransparent does not show other cards.
     }
     public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -146,7 +147,7 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         switch (ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
-                this.setImageAlpha(225);
+                this.setImageAlpha(200);
                 /*
                 AlphaAnimation alpha = new AlphaAnimation(1.0F, 0.5F); // change values as you want
                 alpha.setDuration(1); // Make animation instant
