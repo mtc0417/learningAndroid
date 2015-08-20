@@ -47,20 +47,12 @@ public class PlayingArea extends ViewGroup {
         int height = b-t;
         int cardWidth = card.getOriginalWidth();
         int cardHeight = card.getOriginalHeight();
-        int leftMargin = width/2 - 5*cardWidth/4;
-        if(leftMargin < 0)
-        {
-            leftMargin = width/2 - cardWidth;
-        }
+        int leftMargin = width/2 - 3*cardWidth/4;//width/2 - 5*cardWidth/4;
         if(leftMargin < 0)
         {
             leftMargin = 0;
         }
-        int topMargin = height/2 - 5*cardHeight/4;
-        if(topMargin < 0)
-        {
-            topMargin = height/2 - cardHeight;
-        }
+        int topMargin = height/2 - 4*cardHeight/4;//height/2 - 5*cardHeight/4;
         if(topMargin < 0)
         {
             topMargin = 0;
