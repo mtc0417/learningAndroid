@@ -16,23 +16,21 @@ import android.widget.ImageView;
  */
 public class CardView extends ImageView  implements Comparable<CardView>{
 
-    public int getOriginalWidth() {
-        return mWidth;
-    }
-
-    public int getOriginalHeight() {
-        return mHeight;
-    }
-
-    private int mWidth;
-    private int mHeight;
-    public enum CardDisplayState {
+    public enum DisplayState {
         OPEN, CLOSE
     }
-    public enum CardOrientation {
+    public enum Orientation {
         VERTICAL, HORIZONTAL
     }
+    private int mWidth;
+    private int mHeight;
+    private boolean mSelected;
+    private Card mCard;
+    private DisplayState mCardDisplayState;
+    private Orientation mCardOrientation;
 
+
+    public Card getCard() {return mCard;}
     public boolean isTrump()
     {
         return mCard.isTrump();
@@ -49,48 +47,45 @@ public class CardView extends ImageView  implements Comparable<CardView>{
     {
         return this.mCard.equals(card);
     }
-    public CardDisplayState getCardDisplayState() {
+    public DisplayState getCardDisplayState() {
         return mCardDisplayState;
     }
-
-    public CardOrientation getCardOrientation() {
+    public Orientation getCardOrientation() {
         return mCardOrientation;
     }
-
-    public void setCardDisplayState(CardDisplayState cardDisplayState) {
+    public void setCardDisplayState(DisplayState cardDisplayState) {
         this.mCardDisplayState = cardDisplayState;
     }
-
-    public void setCardOrientation(CardOrientation cardOrientation) {
+    public void setCardOrientation(Orientation cardOrientation) {
         this.mCardOrientation = cardOrientation;
     }
-
-    private Card mCard;
-    private CardDisplayState mCardDisplayState;
-    private CardOrientation mCardOrientation;
+    public void setStates(DisplayState cardDisplayState, Orientation cardOrientation)
+    {
+        mCardDisplayState = cardDisplayState;
+        mCardOrientation = cardOrientation;
+        loadImage();
+    }
 
     public CardView(Context context){
         super(context);
+        mSelected = false;
     }
 
     public CardView(Context context, Card card){
-        super(context);
+        this(context);
         mCard = card;
         this.setBackgroundColor(0xFF000000); // make background black so that making cards semitransparent does not show other cards.
-    }
-    public CardView(Context context, AttributeSet attrs) {
-        super(context, attrs);
     }
     public void loadImage() // call externally after setting orientation and display state
     {
         Bitmap bm;
-        if(mCardDisplayState == CardDisplayState.OPEN)
+        if(mCardDisplayState == DisplayState.OPEN)
         {
             bm = getFrontBitmap();
         }
         else
         {
-            if(mCardOrientation == CardOrientation.HORIZONTAL) {
+            if(mCardOrientation == Orientation.HORIZONTAL) {
                 bm = getHorizontalBackBitmap();
             }
             else
@@ -142,12 +137,33 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         setMeasuredDimension(width, height);
         System.out.println("CardView:onMeasure: width:" + width + ", height:" + height);
     }
-
+    @Override
+    public String toString()
+    {
+        return mCard.toString();
+    }
+    public void setSelected(boolean selected)
+    {
+        if(selected) {
+            this.setImageAlpha(200);
+        }
+        else
+        {
+            this.setImageAlpha(255);
+        }
+        mSelected = selected;
+    }
+    public boolean getSelected()
+    {
+        return mSelected;
+    }
     public boolean onTouchEvent(MotionEvent ev) {
+        //System.out.println(this.toString() + " " + ev);
+
         switch (ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
-                this.setImageAlpha(200);
+                this.setImageAlpha(220);
                 /*
                 AlphaAnimation alpha = new AlphaAnimation(1.0F, 0.5F); // change values as you want
                 alpha.setDuration(1); // Make animation instant
@@ -172,4 +188,11 @@ public class CardView extends ImageView  implements Comparable<CardView>{
         }
         return true;
     }
+    public int getOriginalWidth() {
+        return mWidth;
+    }
+    public int getOriginalHeight() {
+        return mHeight;
+    }
+
 }

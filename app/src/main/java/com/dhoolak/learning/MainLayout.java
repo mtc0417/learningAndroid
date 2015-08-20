@@ -20,6 +20,7 @@ public class MainLayout extends ViewGroup {
     private PlayerView mPlayerMyPartner;
     private PlayerView mPlayerOpponentLeft;
     private PlayerView mPlayerOpponentRight;
+    private PlayingArea mPlayingArea;
     private ViewGroup mControlBar;
     private LinearLayout mControlVG;
 
@@ -49,30 +50,28 @@ public class MainLayout extends ViewGroup {
         mPlayerOpponentLeft = new PlayerViewV(context, PlayerView.PlayerType.PLAYER_TYPE_OPPONENT_LEFT);
         mPlayerOpponentRight = new PlayerViewV(context, PlayerView.PlayerType.PLAYER_TYPE_OPPONENT_RIGHT);
         mControlBar = new ControlBarView(context);
+        mPlayingArea = new PlayingArea(context);
         addView(mPlayerMe);
         addView(mPlayerMyPartner);
         addView(mPlayerOpponentLeft);
         addView(mPlayerOpponentRight);
         addView(mControlBar);
+        addView(mPlayingArea);
 
         mPlayerMe.setBackgroundColor(0xFF00FF00);
         mPlayerMyPartner.setBackgroundColor(0xFF00FF00);
         mPlayerOpponentRight.setBackgroundColor(0xFF0000FF);
         mPlayerOpponentLeft.setBackgroundColor(0xFF0000FF);
+        mPlayingArea.setBackgroundColor(0xFF000000);
 
         Game game = Game.getInstance();
         game.setPlayerMe(mPlayerMe);
         game.setPlayerMyPartner(mPlayerMyPartner);
         game.setPlayerOpponentLeft(mPlayerOpponentLeft);
         game.setPlayerOpponentRight(mPlayerOpponentRight);
+        game.setPlayingArea(mPlayingArea);
+        game.init();
         //game.onAllPlayersLoaded();
-    }
-    public void changeColor()
-    {
-        mPlayerMe.setBackgroundColor(0xFF000000);
-        mPlayerMyPartner.setBackgroundColor(0xFF000000);
-        mPlayerOpponentRight.setBackgroundColor(0xFF0000FF);
-        mPlayerOpponentLeft.setBackgroundColor(0xFF0000FF);
     }
     public void removeAllCards()
     {
@@ -80,6 +79,7 @@ public class MainLayout extends ViewGroup {
         mPlayerMyPartner.removeAllCards();
         mPlayerOpponentRight.removeAllCards();
         mPlayerMe.removeAllCards();
+        mPlayingArea.removeAllCards();
     }
 
     public void forceRefresh() // normally not needed, only use it when nothing works.
@@ -88,6 +88,7 @@ public class MainLayout extends ViewGroup {
         mPlayerMyPartner.invalidate();
         mPlayerOpponentLeft.invalidate();
         mPlayerOpponentRight.invalidate();
+        mPlayingArea.invalidate();
         this.invalidate();
     }
 
@@ -112,6 +113,7 @@ public class MainLayout extends ViewGroup {
         mPlayerMyPartner.layout(l, t, l+w, t+h/4);
         t += h/4;
         mPlayerOpponentLeft.layout(l, t, l+w/3, t+h/2);
+        mPlayingArea.layout(l+w/3, t, l+2*w/3, t+h/2);
         mPlayerOpponentRight.layout(l+2*w/3, t, r, t+h/2);
         t += h/2;
         mPlayerMe.layout(l, t, l+w, t+h/4);
@@ -195,7 +197,8 @@ public class MainLayout extends ViewGroup {
         mPlayerMe.measure(width, height/4);
         mPlayerMyPartner.measure(width, height/4);
         mPlayerOpponentLeft.measure(width/3, height/2);
-        mPlayerOpponentRight.measure(width/3, height/4);
+        mPlayingArea.measure(width/3, height/2);
+        mPlayerOpponentRight.measure(width/3, height/2);
         System.out.println("MainLayout:onMeasure: width:" + width + ", height:" + height);
     }
 }

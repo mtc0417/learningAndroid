@@ -8,16 +8,37 @@ import java.util.ArrayList;
 public class Hand {
     public enum State {RUNNING, CLOSED};
     private ArrayList<Card> mCards;
-    private PlayerView mPlayerWon;
+    private PlayerView mWinner;
     private PlayerView mFirstPlayer;
+
+    public State getState() {
+        return mState;
+    }
+
     private State mState;
 
-    public Hand()
+    public Hand(PlayerView firstPlayer)
     {
         mCards = new ArrayList<Card>();
         mState = State.RUNNING;
+        mFirstPlayer = firstPlayer;
     }
-
+    public Card get(int index)
+    {
+        if(index >= mCards.size())
+        {
+            return null;
+        }
+        return mCards.get(index);
+    }
+    public Card[] getCards()
+    {
+        return mCards.toArray(new Card[0]);
+    }
+    public void add(Card card)
+    {
+        addCard(card);
+    }
     public void addCard(Card card) {
         if (mCards.size() > 3) {
             return; // no-op
@@ -28,7 +49,7 @@ public class Hand {
         }
         setWinner();
     }
-    public void setWinner()
+    protected void setWinner()
     {
         // find the player who wins this hand
         Card maxCard = mCards.get(0);
@@ -43,7 +64,11 @@ public class Hand {
                 winner = currentPlayer;
             }
         }
-        mPlayerWon = winner;
+        mWinner = winner;
+    }
+    public PlayerView getWinner()
+    {
+        return mWinner;
     }
     public int size()
     {
@@ -65,6 +90,16 @@ public class Hand {
                 return true;
         }
         return false;
+    }
+    public int getDahlaCount()
+    {
+        int count = 0;
+        for(int i = 0; i < mCards.size(); i++)
+        {
+            if(mCards.get(i).isDahla())
+                count++;
+        }
+        return count;
     }
     public boolean isTrumpChaal()
     {

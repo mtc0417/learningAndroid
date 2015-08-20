@@ -22,6 +22,7 @@ public class PlayerView extends ViewGroup {
         PLAYER_TYPE_ME, PLAYER_TYPE_OPPONENT_LEFT, PLAYER_TYPE_MY_PARTNER, PLAYER_TYPE_OPPONENT_RIGHT
     }
 
+    private String mPlayerName;
     public ArrayList<CardView> getCardList() {
         return mCardList;
     }
@@ -29,23 +30,7 @@ public class PlayerView extends ViewGroup {
         this.mCardList = cardList;
     }
     protected ArrayList<CardView> mCardList;
-    public PlayerType getPlayerType() {
-        return mPlayerType;
-    }
-    public void setPlayerType(PlayerType playerType) {
-        this.mPlayerType = playerType;
-    }
     protected PlayerType mPlayerType;
-
-    public String getPlayerName() {
-        return mPlayerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.mPlayerName = playerName;
-    }
-
-    private String mPlayerName;
     public PlayerView(Context c) {
         super(c);
         mCardList = new ArrayList<CardView>();
@@ -99,15 +84,8 @@ public class PlayerView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        System.out.println("onLayout:changed:" + changed + ", left:" + left + ", top:" + top + ", right:" + right + ", bottom:" + bottom);
-        //redraw(left, top, right, bottom);
-        //redraw(left, top, right, bottom);
+        //System.out.println("PlayerView:onLayout:changed:" + changed + ", left:" + left + ", top:" + top + ", right:" + right + ", bottom:" + bottom);
         redraw(0, 0, right - left, bottom - top);
-        if (mPlayerType.equals(PlayerType.PLAYER_TYPE_ME) || mPlayerType.equals(PlayerType.PLAYER_TYPE_MY_PARTNER)) {
-            //redrawHorizontal(0, 0, right - left, bottom - top);
-        } else {
-            //redrawVertical(0, 0, right - left, bottom - top);
-        }
     }
 
     public void addCard(Card[] cards) {
@@ -117,22 +95,26 @@ public class PlayerView extends ViewGroup {
             System.out.printf(" " + card.toString());
         }
     }
+    public PlayerView getNextPlayer()
+    {
+        return Game.getInstance().getNextPlayer(this);
+    }
     public void addCard(Card c) {
-        CardView.CardDisplayState displayState = CardView.CardDisplayState.CLOSE;
-        CardView.CardOrientation cardOrientation = CardView.CardOrientation.HORIZONTAL;
+        CardView.DisplayState displayState = CardView.DisplayState.CLOSE;
+        CardView.Orientation cardOrientation = CardView.Orientation.HORIZONTAL;
         switch (mPlayerType) {
             case PLAYER_TYPE_OPPONENT_LEFT:
             case PLAYER_TYPE_OPPONENT_RIGHT:
-                displayState = CardView.CardDisplayState.CLOSE;
-                cardOrientation = CardView.CardOrientation.HORIZONTAL;
+                displayState = CardView.DisplayState.CLOSE;
+                cardOrientation = CardView.Orientation.HORIZONTAL;
                 break;
             case PLAYER_TYPE_MY_PARTNER:
-                displayState = CardView.CardDisplayState.CLOSE;
-                cardOrientation = CardView.CardOrientation.VERTICAL;
+                displayState = CardView.DisplayState.CLOSE;
+                cardOrientation = CardView.Orientation.VERTICAL;
                 break;
             case PLAYER_TYPE_ME:
-                displayState = CardView.CardDisplayState.OPEN;
-                cardOrientation = CardView.CardOrientation.VERTICAL;
+                displayState = CardView.DisplayState.OPEN;
+                cardOrientation = CardView.Orientation.VERTICAL;
                 break;
         }
         CardView card = new CardView(this.getContext(), c);
@@ -165,21 +147,15 @@ public class PlayerView extends ViewGroup {
         removeView(view);
         return view;
     }
-    protected void redraw(int left, int top, int right, int bottom)
-    {}
+    protected void redraw(int left, int top, int right, int bottom){}
     /**
      * Any layout manager that doesn't scroll will want this.
      */
     @Override
-    public boolean shouldDelayChildPressedState() {
-        return false;
-    }
-    public void addButton()
-    {
-        Button btn1 = new Button(this.getContext());
-        btn1.setText(this.getPlayerName());
-        this.addView(btn1);
-        btn1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    public boolean shouldDelayChildPressedState() {return false;}
+    public PlayerType getPlayerType() {return mPlayerType;}
+    public void setPlayerType(PlayerType playerType) {this.mPlayerType = playerType;}
 
-    }
+    public String getPlayerName() {return mPlayerName;}
+    public void setPlayerName(String playerName) {this.mPlayerName = playerName;}
 }

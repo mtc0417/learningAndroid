@@ -1,64 +1,76 @@
 package com.dhoolak.learning;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.TreeMap;
+
 /**
  * Created by prakasht on 7/31/2015.
  */
 public class Game {
     private static Game mInstance = new Game();
     private static Object mutex= new Object();
-    public static Game getInstance()
-    {
-        if(mInstance != null)
-        {
-            return mInstance;
-        }
-        synchronized (mutex)
-        {
-            if(mInstance == null)
-                mInstance = new Game();
-        }
-        return mInstance;
-    }
-    public PlayerView getPlayerMe() {
-        return mPlayerMe;
-    }
-
-    public void setPlayerMe(PlayerView mPlayerMe) {
-        this.mPlayerMe = mPlayerMe;
-    }
-
-    public PlayerView getPlayerMyPartner() {
-        return mPlayerMyPartner;
-    }
-
-    public void setPlayerMyPartner(PlayerView mPlayerMyPartner) {
-        this.mPlayerMyPartner = mPlayerMyPartner;
-    }
-
-    public PlayerView getPlayerOpponentLeft() {
-        return mPlayerOpponentLeft;
-    }
-
-    public void setPlayerOpponentLeft(PlayerView mPlayerOpponentLeft) {
-        this.mPlayerOpponentLeft = mPlayerOpponentLeft;
-    }
-
-    public PlayerView getPlayerOpponentRight() {
-        return mPlayerOpponentRight;
-    }
-
-    public void setPlayerOpponentRight(PlayerView mPlayerOpponentRight) {
-        this.mPlayerOpponentRight = mPlayerOpponentRight;
-    }
-
     private PlayerView mPlayerMe;
     private PlayerView mPlayerMyPartner;
     private PlayerView mPlayerOpponentLeft;
     private PlayerView mPlayerOpponentRight;
+    private PlayingArea mPlayingArea;
+    private Card.CardSuit mTrump;
+
+    private ArrayList<HandGroup> mHandGroups;
+    private HandGroup mHandGroup;
+    private Hand mChaal; // currentChaal
+    private PlayerView mFirstPlayer;
+    private PlayerView[] mPlayerOrder;
+
     private Game()
     {
         mTrump = Card.CardSuit.UNKNOWN;
+        //init();
     }
+
+    public void init()
+    {
+        // start with random player
+        Random random = new Random();
+        int rand = random.nextInt(4);
+        PlayerView[] players = Game.getInstance().getPlayers();
+        PlayerView player = players[rand];
+        mChaal = new Hand(player);
+        mHandGroup = new HandGroup(player);
+        mPlayerOrder = new PlayerView[players.length];
+    }
+    protected void startNewChaal()
+    {
+        PlayerView newFirst = mChaal.getWinner();
+        mHandGroup.add(mChaal);
+        mChaal = new Hand(newFirst);
+        setFirstPlayer(newFirst);
+    }
+    public void addCard(PlayerView player, CardView card)
+    {
+        mChaal.add(card.getCard());
+    }
+    protected void addCard(Card card)
+    {
+        if(mChaal.getState().equals(Hand.State.CLOSED))
+        {
+            System.out.println("Error: PlayingArea: Adding hand to closed handgroup. Aborting...");
+            return;
+        }
+        mChaal.addCard(card);
+
+        if(mChaal.getState().equals(Hand.State.CLOSED))
+        {
+            startNewChaal();
+        }
+    }
+    private void setFirstPlayer(PlayerView firstPlayer)
+    {
+        PlayerView[] players = Game.getInstance().getPlayers();
+        mFirstPlayer = firstPlayer;
+    }
+
     public Card.CardSuit getTrump() {
         return mTrump;
     }
@@ -74,14 +86,7 @@ public class Game {
     public void setTrump(Card.CardSuit mTrump) {
         this.mTrump = mTrump;
     }
-    private void checkIfAllPlayersLoaded()
-    {
-        if(mPlayerOpponentRight != null && mPlayerMyPartner != null && mPlayerOpponentLeft != null && mPlayerMe != null)
-        {
-            //onAllPlayersLoaded();
-        }
-    }
-    public void onAllPlayersLoaded()
+    public void onStart()
     {
         Deck deck = Deck.getInstance();
         deck.shuffle();
@@ -97,12 +102,16 @@ public class Game {
             mPlayerMyPartner.addCard(deck.getCards(4));
             mPlayerOpponentRight.addCard(deck.getCards(4));
         }
-        //MainLayout.getInstance().invalidate();
+
+        mPlayingArea.addCard(mPlayerMe, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.HUKUM, Card.CardNumber.N1)));
+        mPlayingArea.addCard(mPlayerOpponentLeft, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.CHIDI, Card.CardNumber.N1)));
+        mPlayingArea.addCard(mPlayerMyPartner, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.PAAN, Card.CardNumber.N1)));
+        mPlayingArea.addCard(mPlayerOpponentRight, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.EENT, Card.CardNumber.N1)));
         System.out.println("Cards distributed");
     }
-    public void onStart()
+    public void onAllPlayersLoaded()
     {
-        onAllPlayersLoaded();
+        init();
     }
     public PlayerView getNextPlayer(PlayerView currentPlayer)
     {
@@ -117,5 +126,30 @@ public class Game {
         }
         return null;
     }
-    private Card.CardSuit mTrump;
+    public static Game getInstance()
+    {
+        if(mInstance != null)
+        {
+            return mInstance;
+        }
+        synchronized (mutex)
+        {
+            if(mInstance == null)
+                mInstance = new Game();
+        }
+        return mInstance;
+    }
+    public PlayerView getPlayerMe() {return mPlayerMe;}
+    public void setPlayerMe(PlayerView mPlayerMe) {
+        this.mPlayerMe = mPlayerMe;
+    }
+    public PlayerView getPlayerMyPartner() {
+        return mPlayerMyPartner;
+    }
+    public void setPlayerMyPartner(PlayerView mPlayerMyPartner) {this.mPlayerMyPartner = mPlayerMyPartner;}
+    public PlayerView getPlayerOpponentLeft() {return mPlayerOpponentLeft;}
+    public void setPlayerOpponentLeft(PlayerView mPlayerOpponentLeft) {this.mPlayerOpponentLeft = mPlayerOpponentLeft;}
+    public PlayerView getPlayerOpponentRight() {return mPlayerOpponentRight;}
+    public void setPlayerOpponentRight(PlayerView mPlayerOpponentRight) {this.mPlayerOpponentRight = mPlayerOpponentRight;}
+    public void setPlayingArea(PlayingArea mPlayingArea) {this.mPlayingArea = mPlayingArea; }
 }

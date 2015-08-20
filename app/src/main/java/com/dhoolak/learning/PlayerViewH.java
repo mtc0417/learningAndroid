@@ -47,7 +47,7 @@ public class PlayerViewH extends PlayerView {
         int layoutHeight = bottom-top;//getHeight();
         int leftOffset = (layoutWidth - (cardWidth + cardOverlappingOffset * (mCardList.size()-1)))/2;
         int topOffset = (layoutHeight - cardHeight)/2;
-        System.out.println("children:" + mCardList.size() + ", display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
+        //System.out.println("children:" + mCardList.size() + ", display(" + screenWidth + "x" + screenHeight + "), card(" + cardWidth + "x" + cardHeight + "), layout(" + layoutWidth + "x" + layoutHeight + "), leftOffset:" + leftOffset);
         for(int i = 0; i < mCardList.size(); i++)
         {
             CardView card = mCardList.get(i);
