@@ -45,7 +45,7 @@ public class MainLayout extends ViewGroup {
         initView(context);
     }
     protected void initView(Context context){
-        mPlayerMe = new PlayerViewH(context, PlayerView.PlayerType.PLAYER_TYPE_ME);
+        mPlayerMe = new PlayerViewMe(context, PlayerView.PlayerType.PLAYER_TYPE_ME);
         mPlayerMyPartner = new PlayerViewH(context, PlayerView.PlayerType.PLAYER_TYPE_MY_PARTNER);
         mPlayerOpponentLeft = new PlayerViewV(context, PlayerView.PlayerType.PLAYER_TYPE_OPPONENT_LEFT);
         mPlayerOpponentRight = new PlayerViewV(context, PlayerView.PlayerType.PLAYER_TYPE_OPPONENT_RIGHT);

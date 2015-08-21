@@ -11,10 +11,6 @@ import android.view.WindowManager;
  * Created by prakasht on 7/24/2015.
  */
 public class PlayerViewV extends PlayerView {
-    public PlayerViewV(Context c, AttributeSet attr)
-    {
-        super(c, attr);
-    }
     public PlayerViewV(Context c, PlayerType playerType)
     {
         super(c, playerType);

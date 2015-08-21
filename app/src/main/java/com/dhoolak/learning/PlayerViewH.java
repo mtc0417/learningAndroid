@@ -18,13 +18,6 @@ public class PlayerViewH extends PlayerView {
     {
         super(c, playerType);
     }
-    public PlayerViewH(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-    }
-    public PlayerViewH(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
     protected void redraw(int left, int top, int right, int bottom)
     {
         if(mCardList.size() == 0)

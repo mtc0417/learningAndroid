@@ -103,10 +103,10 @@ public class Game {
             mPlayerOpponentRight.addCard(deck.getCards(4));
         }
 
-        mPlayingArea.addCard(mPlayerMe, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.HUKUM, Card.CardNumber.N1)));
-        mPlayingArea.addCard(mPlayerOpponentLeft, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.CHIDI, Card.CardNumber.N1)));
-        mPlayingArea.addCard(mPlayerMyPartner, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.PAAN, Card.CardNumber.N1)));
-        mPlayingArea.addCard(mPlayerOpponentRight, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.EENT, Card.CardNumber.N1)));
+        mPlayingArea.addCard(mPlayerMyPartner, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.PAAN, Card.CardNumber.N6)));
+        mPlayingArea.addCard(mPlayerOpponentRight, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.EENT, Card.CardNumber.N7)));
+        mPlayingArea.addCard(mPlayerMe, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.HUKUM, Card.CardNumber.N5)));
+        mPlayingArea.addCard(mPlayerOpponentLeft, new CardView(mPlayingArea.getContext(), new Card(Card.CardSuit.CHIDI, Card.CardNumber.N9)));
         System.out.println("Cards distributed");
     }
     public void onAllPlayersLoaded()

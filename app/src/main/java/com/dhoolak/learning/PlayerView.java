@@ -99,7 +99,7 @@ public class PlayerView extends ViewGroup {
     {
         return Game.getInstance().getNextPlayer(this);
     }
-    public void addCard(Card c) {
+    public CardView addCard(Card c) {
         CardView.DisplayState displayState = CardView.DisplayState.CLOSE;
         CardView.Orientation cardOrientation = CardView.Orientation.HORIZONTAL;
         switch (mPlayerType) {
@@ -124,6 +124,7 @@ public class PlayerView extends ViewGroup {
         mCardList.add(card);
         Collections.sort(mCardList, Collections.reverseOrder());
         addView(card, new LayoutParams(card.getOriginalWidth(), card.getOriginalHeight()));
+        return card;
     }
     public void removeAllCards()
     {
