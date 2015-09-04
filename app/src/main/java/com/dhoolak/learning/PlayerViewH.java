@@ -24,7 +24,7 @@ public class PlayerViewH extends PlayerView {
         {
             return;
         }
-        int cardOverlappingOffset = 45;
+        int cardOverlappingOffset = 35;
 
         WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displaymetrics = new DisplayMetrics();
